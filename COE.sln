@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "COE", "COE\COE.csproj", "{38CE5ED1-27F9-4C96-9096-D89659B563AA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "COE.Tests", "COE.Tests\COE.Tests.csproj", "{0A9808F4-8C60-4758-9887-1D4B409B26CC}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 1
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://robkeim.visualstudio.com/defaultcollection
+		SccLocalPath0 = .
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{38CE5ED1-27F9-4C96-9096-D89659B563AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38CE5ED1-27F9-4C96-9096-D89659B563AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38CE5ED1-27F9-4C96-9096-D89659B563AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38CE5ED1-27F9-4C96-9096-D89659B563AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A9808F4-8C60-4758-9887-1D4B409B26CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A9808F4-8C60-4758-9887-1D4B409B26CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A9808F4-8C60-4758-9887-1D4B409B26CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A9808F4-8C60-4758-9887-1D4B409B26CC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
