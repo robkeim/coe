@@ -14,7 +14,7 @@ namespace COE
 
         public static void SendInitialEmail()
         {
-            SendToAll("Who's in?", string.Format(@"Hello everyone,<br /><br />I hope that everyone is doing well, and am looking forward to catching up with many of you at Christmas time!<br /><br />Please click <a href=""{0}""><b>here</b></a> to fill out the form and submit your response.  It only takes one minute to do!</b>", ConfigurationManager.AppSettings["GoogleFormUrl"]));
+            SendToAll("Who's in?", $@"Hello everyone,<br /><br />I hope that everyone is doing well, and am looking forward to catching up with many of you at Christmas time!<br /><br />Please click <a href=""{ConfigurationManager.AppSettings["GoogleFormUrl"]}""><b>here</b></a> to fill out the form and submit your response.  It only takes one minute to do!</b>");
         }
 
         public static void SendWallOfFame()
@@ -22,7 +22,7 @@ namespace COE
             var responses = Parsing.GetResponses(Program.ResponsesDocument);
             var responsesString = string.Join("<br />", responses.Select(r => r.Name.GetFullName()).Where(r => r != "Rob Keim"));
 
-            string body = string.Format("Thanks for everyone that has responded so far!  The next update will be the wall of shame so be sure to get your responses sent in ASAP to avoid being on that list!<br /><br />Here's the wall of fame for the people who have already responded (in order of their responses):<br /><br />{0}", responsesString);
+            string body = $"Thanks for everyone that has responded so far!  The next update will be the wall of shame so be sure to get your responses sent in ASAP to avoid being on that list!<br /><br />Here's the wall of fame for the people who have already responded (in order of their responses):<br /><br />{responsesString}";
 
             SendToAll("Wall of fame", body);
         }
@@ -33,7 +33,7 @@ namespace COE
             var nonResponders = Data.Family.Where(p => !p.IsInactive).Select(p => p.Name).Except(responses.Select(r => r.Name)).OrderBy(p => p);
             var nonRespondersString = string.Join("<br />", nonResponders.Select(nr => nr.GetFullName()));
 
-            string body = string.Format("As promised the wall of shame :)<br /><br />The following people have still NOT responded please respond ASAP:<br /><br />{0}", nonRespondersString);
+            string body = $"As promised the wall of shame :)<br /><br />The following people have still NOT responded please respond ASAP:<br /><br />{nonRespondersString}");
 
             SendToAll("Wall of shame", body);
         }
@@ -106,8 +106,8 @@ namespace COE
         {
             var to = rawTo.OrderBy(email => email).Distinct().ToList();
 
-            subject = string.Format("[CoE {0}] {1}", Program.CurrentYear, subject);
-            body = string.Format("{0}<br /><br />Love,<br />Rob", body);
+            subject = $"[CoE {Program.CurrentYear}] {subject}";
+            body = $"{body}<br /><br />Love,<br />Rob";
 
             lock (lockObj)
             {

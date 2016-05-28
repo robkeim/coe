@@ -14,12 +14,6 @@ namespace COE
 
         public Dictionary<int, Name?> History { get; set; }
 
-        public bool IsInactive
-        {
-            get
-            {
-                return string.IsNullOrWhiteSpace(Email);
-            }
-        }
+        public bool IsInactive => string.IsNullOrWhiteSpace(Email);
     }
 }

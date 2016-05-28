@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace COE
 {
@@ -10,13 +8,15 @@ namespace COE
     {
         public static List<Pairing> GetPairings(this int[,] matrix, List<Response> participants)
         {
-            List<Pairing> results = new List<Pairing>();
+            var results = new List<Pairing>();
 
-            int matchCount = 0;
-            Name personToMatch = participants.First().Name;
+            var matchCount = 0;
+            var personToMatch = participants.First().Name;
             var personToMatchIndex = 0;
-            HashSet<int> matchedIndexes = new HashSet<int>();
-            matchedIndexes.Add(personToMatchIndex);
+            var matchedIndexes = new HashSet<int>
+            {
+                personToMatchIndex
+            };
 
             while (matchCount < participants.Count - 1)
             {
@@ -63,16 +63,16 @@ namespace COE
 
         public static void PrintPairings(this List<Pairing> pairings)
         {
-            int i = 0;
+            var i = 0;
             foreach (var pairing in pairings)
             {
-                Console.WriteLine("{0, 2} ({1}): {2} -> {3}", ++i, pairing.Weight, pairing.Giver, pairing.Receiver);
+                Console.WriteLine($"{++i, 2} ({pairing.Weight}): {pairing.Giver} -> {pairing.Receiver}");
             }
         }
 
         private static List<Match> GetPotentialMatches(this int[,] matrix)
         {
-            List<Match> results = new List<Match>();
+            var results = new List<Match>();
 
             var matrixSize = matrix.GetUpperBound(0);
 

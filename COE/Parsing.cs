@@ -9,12 +9,12 @@ namespace COE
     {
         public static List<Response> GetResponses(string filePath)
         {
-            HashSet<Name> names = new HashSet<Name>();
-            List<Response> results = new List<Response>();
+            var names = new HashSet<Name>();
+            var results = new List<Response>();
 
             if (!File.Exists(filePath))
             {
-                throw new ArgumentException("File does not exist", "filePath");
+                throw new ArgumentException("File does not exist", nameof(filePath));
             }
 
             var lines = File.ReadAllLines(filePath);
@@ -27,14 +27,14 @@ namespace COE
 
                 if (!names.Add(name))
                 {
-                    throw new ArgumentException(string.Format("Duplicate name: {0}", name));
+                    throw new ArgumentException($"Duplicate name: {name}");
                 }
 
                 results.Add(new Response
                 {
                     Name = name,
                     IsParticipating = string.Equals(split[1], "Yes", StringComparison.InvariantCultureIgnoreCase),
-                    Address = split.Count() == 3 ? split[2] : null
+                    Address = split.Length == 3 ? split[2] : null
                 });
             }
 
