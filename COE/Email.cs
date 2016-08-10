@@ -33,7 +33,7 @@ namespace COE
             var nonResponders = Data.Family.Where(p => !p.IsInactive).Select(p => p.Name).Except(responses.Select(r => r.Name)).OrderBy(p => p);
             var nonRespondersString = string.Join("<br />", nonResponders.Select(nr => nr.GetFullName()));
 
-            string body = $"As promised the wall of shame :)<br /><br />The following people have still NOT responded please respond ASAP:<br /><br />{nonRespondersString}");
+            string body = $"As promised the wall of shame :)<br /><br />The following people have still NOT responded please respond ASAP:<br /><br />{nonRespondersString}";
 
             SendToAll("Wall of shame", body);
         }

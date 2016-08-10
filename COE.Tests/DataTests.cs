@@ -28,8 +28,8 @@ namespace COE.Tests
             {
                 if (person.Spouse != null)
                 {
-                    Assert.IsTrue(person.Name != person.Spouse, "Spouce mismatch for: " + person.Name);
-                    Assert.AreEqual(person.Name, Data.Family.Single(p => p.Name == person.Spouse).Spouse, "Spouse mismatch for: " + person.Name);
+                    Assert.IsTrue(person.Name != person.Spouse, $"Spouce mismatch for: {person.Name}");
+                    Assert.AreEqual(person.Name, Data.Family.Single(p => p.Name == person.Spouse).Spouse, $"Spouse mismatch for: {person.Name}");
                 }
             }
         }
@@ -43,8 +43,8 @@ namespace COE.Tests
                 {
                     foreach (var sibling in person.Siblings)
                     {
-                        Assert.IsTrue(person.Name != sibling, "Sibling mistmach for: " + person.Name);
-                        Assert.IsTrue(sibling.GetPerson().Siblings.Contains(person.Name), "Sibling mistmach for: " + person.Name);
+                        Assert.IsTrue(person.Name != sibling, $"Sibling mistmach for: {person.Name}");
+                        Assert.IsTrue(sibling.GetPerson().Siblings.Contains(person.Name), $"Sibling mistmach for: {person.Name}");
                     }
                 }
             }
@@ -64,9 +64,9 @@ namespace COE.Tests
                 {
                     var recipient = participant.History[year].Value;
 
-                    Assert.IsTrue(recipients.Add(recipient), "{0} has already been given to", recipient);
-                    Assert.IsTrue(participant.Name != recipient, "Gift mismatch for: " + participant.Name + " in: " + year);
-                    Assert.IsTrue(participants.Contains(recipient.GetPerson()), "Gift mismatch for: " + participant.Name + " in: " + year);
+                    Assert.IsTrue(recipients.Add(recipient), $"{recipient} has already been given to");
+                    Assert.IsTrue(participant.Name != recipient, $"Gift mismatch for: {participant.Name} in: {year}");
+                    Assert.IsTrue(participants.Contains(recipient.GetPerson()), $"Gift mismatch for: {participant.Name} in: {year}");
                 }
             }
         }

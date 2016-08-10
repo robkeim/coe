@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 
 namespace COE
 {
@@ -96,20 +95,20 @@ namespace COE
         {
             Console.Write("   ");
 
-            for (int i = 0; i < participants.Count; i++)
+            foreach (Response participant in participants)
             {
-                Console.Write("{0,3}", participants[i].Name.GetInitials());
+                Console.Write($"{participant.Name.GetInitials(),3}");
             }
 
             Console.WriteLine();
 
             for (int i = 0; i < participants.Count; i++)
             {
-                Console.Write("{0,3}", participants[i].Name.GetInitials());
+                Console.Write($"{participants[i].Name.GetInitials(),3}");
 
                 for (int j = 0; j < participants.Count; j++)
                 {
-                    Console.Write("{0,3}", matrix[i, j]);
+                    Console.Write($"{matrix[i, j],3}");
                 }
 
                 Console.WriteLine();
