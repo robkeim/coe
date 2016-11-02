@@ -40,19 +40,24 @@ namespace COE
 
         const string pairingMessageFormat = "Hello {0},<br /><br />You have <b>{1}</b> this year and you can send your ornament to:<br />{2}";
 
-        public static void SendPairings(int? seed = null)
+        public static void SendPairings()
         {
             var responses = Parsing.GetResponses(Program.ResponsesDocument);
             var participants = responses.Where(r => r.IsParticipating).ToList();
 
-            if (seed.HasValue)
-            {
-                Random random = new Random(seed.Value);
-                participants = participants.OrderBy(p => random.Next()).ToList();
-            }
-
+            var seed = 0;
             var matrix = Parsing.GetCompatibilityMatrix(participants);
             var pairings = matrix.GetPairings(participants);
+
+            while (pairings.Sum(p => p.Weight) != 0)
+            {
+                Console.WriteLine($"Retry #{++seed}");
+                var random = new Random(seed);
+                participants = participants.OrderBy(p => random.Next()).ToList();
+                matrix = Parsing.GetCompatibilityMatrix(participants);
+                pairings = matrix.GetPairings(participants);
+            }
+
             pairings.PrintPairings();
 
             Console.Write("Send pairings (y/n)?");
