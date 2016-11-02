@@ -13,7 +13,7 @@ namespace COE
 
         public static readonly HashSet<Name> ForcedMatchees = new HashSet<Name>(ForcedMatches.Values);
 
-        public const int CurrentYear = 2015;
+        public const int CurrentYear = 2016;
         public static readonly EmailStatus EmailStatus = EmailStatus.Disabled;
 
         // Lines in the file follow the following format:

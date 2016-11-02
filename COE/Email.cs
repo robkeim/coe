@@ -22,7 +22,7 @@ namespace COE
             var responses = Parsing.GetResponses(Program.ResponsesDocument);
             var responsesString = string.Join("<br />", responses.Select(r => r.Name.GetFullName()).Where(r => r != "Rob Keim"));
 
-            string body = $"Thanks for everyone that has responded so far!  The next update will be the wall of shame so be sure to get your responses sent in ASAP to avoid being on that list!<br /><br />Here's the wall of fame for the people who have already responded (in order of their responses):<br /><br />{responsesString}";
+            string body = $@"Thanks for everyone that has responded so far!  The next update will be the wall of shame so be sure to get your responses sent in ASAP to avoid being on that list!<br /><br />Here's the wall of fame for the people who have already responded (in order of their responses):<br /><br />{responsesString}<br /><br />For those who haven't responded yet, click <a href=""{ConfigurationManager.AppSettings["GoogleFormUrl"]}""><b>here</b></a> to do so.";
 
             SendToAll("Wall of fame", body);
         }
@@ -30,10 +30,10 @@ namespace COE
         public static void SendWallOfShame()
         {
             var responses = Parsing.GetResponses(Program.ResponsesDocument);
-            var nonResponders = Data.Family.Where(p => !p.IsInactive).Select(p => p.Name).Except(responses.Select(r => r.Name)).OrderBy(p => p);
+            var nonResponders = Data.Family.Where(p => !p.IsInactive && p.Name != Name.Rob_Keim).Select(p => p.Name).Except(responses.Select(r => r.Name)).OrderBy(p => p);
             var nonRespondersString = string.Join("<br />", nonResponders.Select(nr => nr.GetFullName()));
 
-            string body = $"As promised the wall of shame :)<br /><br />The following people have still NOT responded please respond ASAP:<br /><br />{nonRespondersString}";
+            string body = $@"As promised the wall of shame :)<br /><br />The following people have still NOT responded please respond ASAP:<br /><br />{nonRespondersString}<br /><br />Slackers <a href=""{ConfigurationManager.AppSettings["GoogleFormUrl"]}""><b>here</b></a>'s your link to respond.";
 
             SendToAll("Wall of shame", body);
         }
