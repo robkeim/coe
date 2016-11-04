@@ -65,7 +65,7 @@ namespace COE
 
             if (response != null && response.StartsWith("y", StringComparison.InvariantCultureIgnoreCase))
             {
-                Parallel.ForEach(pairings, pairing =>
+                var tasks = pairings.Select(pairing =>
                 {
                     var giver = pairing.Giver.GetPerson();
                     var receiver = pairing.Receiver.GetPerson();
@@ -86,8 +86,10 @@ namespace COE
 
                     var message = string.Format(pairingMessageFormat, giver.Name.GetFirstName(), receiver.Name.GetFullName(), address);
 
-                    SendEmail(giver.Email, "Pairing", message);
-                });
+                    return SendEmailAsync(giver.Email, "Pairing", message);
+                }).ToArray();
+
+                Task.WaitAll(tasks);
 
                 SendToAll("Pairings sent", "The pairing have been sent!!  Let me know ASAP if there are any problems, and let the shopping begin!");
             }
@@ -99,15 +101,15 @@ namespace COE
 
         private static void SendToAll(string subject, string body)
         {
-            SendEmail(Data.Family.Where(p => !p.IsInactive && p.Email != null).Select(p => p.Email), subject, body);
+            SendEmailAsync(Data.Family.Where(p => !p.IsInactive && p.Email != null).Select(p => p.Email), subject, body).Wait();
         }
 
-        private static void SendEmail(string email, string subject, string body)
+        private static Task SendEmailAsync(string email, string subject, string body)
         {
-            SendEmail(new[] { email }, subject, body);
+            return SendEmailAsync(new[] { email }, subject, body);
         }
 
-        private static void SendEmail(IEnumerable<string> rawTo, string subject, string body)
+        private static Task SendEmailAsync(IEnumerable<string> rawTo, string subject, string body)
         {
             var to = rawTo.OrderBy(email => email).Distinct().ToList();
 
@@ -138,24 +140,26 @@ namespace COE
                 };
 
                 var message = new MailMessage
-                    {
-                        From = new MailAddress("robkeim@gmail.com"),
-                        Subject = subject,
-                        Body = body,
-                        IsBodyHtml = true
-                    };
+                {
+                    From = new MailAddress("robkeim@gmail.com"),
+                    Subject = subject,
+                    Body = body,
+                    IsBodyHtml = true
+                };
 
                 foreach (var email in to)
                 {
                     message.To.Add(new MailAddress(email));
                 }
 
-                client.Send(message);
+                return client.SendMailAsync(message);
             }
             else
             {
                 Console.WriteLine("Email sending disabled");
             }
+
+            return Task.CompletedTask;
         }
 
         private static string GetFullName(this Name name)
