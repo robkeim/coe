@@ -33,7 +33,7 @@ namespace COE
             var nonResponders = Data.Family.Where(p => !p.IsInactive && p.Name != Name.Rob_Keim).Select(p => p.Name).Except(responses.Select(r => r.Name)).OrderBy(p => p);
             var nonRespondersString = string.Join("<br />", nonResponders.Select(nr => nr.GetFullName()));
 
-            string body = $@"As promised the wall of shame :)<br /><br />The following people have still NOT responded please respond ASAP:<br /><br />{nonRespondersString}<br /><br />Slackers <a href=""{ConfigurationManager.AppSettings["GoogleFormUrl"]}""><b>here</b></a>'s your link to respond.";
+            string body = $@"As promised the wall of shame :)<br /><br />The following people have still NOT responded:<br /><br />{nonRespondersString}<br /><br />Please repsond <a href=""{ConfigurationManager.AppSettings["GoogleFormUrl"]}""><b>here</b></a> ASAP!";
 
             SendToAll("Wall of shame", body);
         }
