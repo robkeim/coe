@@ -65,7 +65,8 @@ namespace COE
 
             if (response != null && response.StartsWith("y", StringComparison.InvariantCultureIgnoreCase))
             {
-                var tasks = pairings.Select(pairing =>
+                // Sending these e-mails one by one as there were SMTP errors when I tried to send too many emails simultaneously
+                foreach (var pairing in pairings)
                 {
                     var giver = pairing.Giver.GetPerson();
                     var receiver = pairing.Receiver.GetPerson();
@@ -86,10 +87,8 @@ namespace COE
 
                     var message = string.Format(pairingMessageFormat, giver.Name.GetFirstName(), receiver.Name.GetFullName(), address);
 
-                    return SendEmailAsync(giver.Email, "Pairing", message);
-                }).ToArray();
-
-                Task.WaitAll(tasks);
+                    SendEmailAsync(giver.Email, "Pairing", message).Wait();
+                }
 
                 SendToAll("Pairings sent", "The pairing have been sent!!  Let me know ASAP if there are any problems, and let the shopping begin!");
             }

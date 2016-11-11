@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net;
 
 namespace COE
 {
@@ -24,8 +23,6 @@ namespace COE
 
         static void Main(string[] args)
         {
-            Initialize();
-
             // Steps to use the program
             // 0. Update the current year and set the EmailStatus to Enabled
 
@@ -43,12 +40,6 @@ namespace COE
 
             Console.WriteLine("Done!");
             Console.ReadLine();
-        }
-
-        private static void Initialize()
-        {
-            // Enable sending multiple emails simultaneously
-            ServicePointManager.DefaultConnectionLimit = 64;
         }
     }
 }
