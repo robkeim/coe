@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace COE
 {
+     [DebuggerDisplay("Name = {Name}")]
     public class Person
     {
         public Name Name { get; set; }

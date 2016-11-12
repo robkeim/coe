@@ -51,6 +51,20 @@ namespace COE.Tests
         }
 
         [TestMethod]
+        public void ValidateFullHistory()
+        {
+            var years = Name.Rob_Keim.GetPerson().History.Keys;
+
+            foreach (var person in Data.Family)
+            {
+                foreach (var year in years)
+                {
+                    Assert.IsTrue(person.History.ContainsKey(year), $"Missing history for {person.Name} in year {year}");
+                }
+            }
+        }
+
+        [TestMethod]
         public void ValidateYears()
         {
             var years = Name.Rob_Keim.GetPerson().History.Keys;
