@@ -1,11 +1,10 @@
-﻿namespace COE
+﻿namespace COE;
+
+public class Pairing
 {
-    public class Pairing
-    {
-        public Name Giver { get; set; }
+    public Name Giver { get; set; }
 
-        public Name Receiver { get; set; }
+    public Name Receiver { get; set; }
 
-        public int Weight { get; set; }
-    }
+    public int Weight { get; set; }
 }

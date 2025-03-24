@@ -1,87 +1,86 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
-namespace COE.Tests
+namespace COE.Tests;
+
+[TestFixture]
+public class DataTests
 {
-    [TestClass]
-    public class DataTests
+    [Test]
+    public void ValidateNames()
     {
-        [TestMethod]
-        public void ValidateNames()
+        var names = Enum.GetValues(typeof(Name));
+
+        Assert.That(names.Length, Is.EqualTo(Data.Family.Count), "Unexpected number of elements");
+
+        foreach (Name name in names)
         {
-            var names = Enum.GetValues(typeof(Name));
+            Assert.That(Data.Family.Any(f => f.Name == name), Is.True, "Unable to find Name: " + name);
+        }
+    }
 
-            Assert.AreEqual(names.Length, Data.Family.Count, "Unexpected number of elements");
-
-            foreach (Name name in names)
+    [Test]
+    public void ValidateSpouses()
+    {
+        foreach (var person in Data.Family)
+        {
+            if (person.Spouse != null)
             {
-                Assert.IsTrue(Data.Family.Any(f => f.Name == name), "Unable to find Name: " + name);
+                Assert.That(person.Name != person.Spouse, Is.True, $"Spouce mismatch for: {person.Name}");
+                Assert.That(person.Name, Is.EqualTo(Data.Family.Single(p => p.Name == person.Spouse).Spouse), $"Spouse mismatch for: {person.Name}");
             }
         }
+    }
 
-        [TestMethod]
-        public void ValidateSpouses()
+    [Test]
+    public void ValidateSiblings()
+    {
+        foreach (var person in Data.Family)
         {
-            foreach (var person in Data.Family)
+            if (person.Siblings != null)
             {
-                if (person.Spouse != null)
+                foreach (var sibling in person.Siblings)
                 {
-                    Assert.IsTrue(person.Name != person.Spouse, $"Spouce mismatch for: {person.Name}");
-                    Assert.AreEqual(person.Name, Data.Family.Single(p => p.Name == person.Spouse).Spouse, $"Spouse mismatch for: {person.Name}");
+                    Assert.That(person.Name != sibling, Is.True, $"Sibling mistmach for: {person.Name}");
+                    Assert.That(sibling.GetPerson().Siblings.Contains(person.Name), Is.True, $"Sibling mistmach for: {person.Name}");
                 }
             }
         }
+    }
 
-        [TestMethod]
-        public void ValidateSiblings()
+    [Test]
+    public void ValidateFullHistory()
+    {
+        var years = Name.Rob_Keim.GetPerson().History.Keys;
+
+        foreach (var person in Data.Family)
         {
-            foreach (var person in Data.Family)
-            {
-                if (person.Siblings != null)
-                {
-                    foreach (var sibling in person.Siblings)
-                    {
-                        Assert.IsTrue(person.Name != sibling, $"Sibling mistmach for: {person.Name}");
-                        Assert.IsTrue(sibling.GetPerson().Siblings.Contains(person.Name), $"Sibling mistmach for: {person.Name}");
-                    }
-                }
-            }
-        }
-
-        [TestMethod]
-        public void ValidateFullHistory()
-        {
-            var years = Name.Rob_Keim.GetPerson().History.Keys;
-
-            foreach (var person in Data.Family)
-            {
-                foreach (var year in years)
-                {
-                    Assert.IsTrue(person.History.ContainsKey(year), $"Missing history for {person.Name} in year {year}");
-                }
-            }
-        }
-
-        [TestMethod]
-        public void ValidateYears()
-        {
-            var years = Name.Rob_Keim.GetPerson().History.Keys;
-
             foreach (var year in years)
             {
-                var participants = Data.Family.Where(p => p.History[year] != null).ToList();
-                var recipients = new HashSet<Name>();
+                Assert.That(person.History.ContainsKey(year), Is.True, $"Missing history for {person.Name} in year {year}");
+            }
+        }
+    }
 
-                foreach (var participant in participants)
-                {
-                    var recipient = participant.History[year].Value;
+    [Test]
+    public void ValidateYears()
+    {
+        var years = Name.Rob_Keim.GetPerson().History.Keys;
 
-                    Assert.IsTrue(recipients.Add(recipient), $"{recipient} has already been given to");
-                    Assert.IsTrue(participant.Name != recipient, $"Gift mismatch for: {participant.Name} in: {year}");
-                    Assert.IsTrue(participants.Contains(recipient.GetPerson()), $"Gift mismatch for: {participant.Name} in: {year}");
-                }
+        foreach (var year in years)
+        {
+            var participants = Data.Family.Where(p => p.History[year] != null).ToList();
+            var recipients = new HashSet<Name>();
+
+            foreach (var participant in participants)
+            {
+                var recipient = participant.History[year].Value;
+
+                Assert.That(recipients.Add(recipient), Is.True, $"{recipient} has already been given to");
+                Assert.That(participant.Name != recipient, Is.True, $"Gift mismatch for: {participant.Name} in: {year}");
+                Assert.That(participants.Contains(recipient.GetPerson()), Is.True, $"Gift mismatch for: {participant.Name} in: {year}");
             }
         }
     }

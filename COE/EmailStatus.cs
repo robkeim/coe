@@ -1,9 +1,8 @@
-﻿namespace COE
+﻿namespace COE;
+
+public enum EmailStatus
 {
-    public enum EmailStatus
-    {
-        Enabled,
-        OnlyToMe,
-        Disabled
-    }
+    Enabled,
+    OnlyToMe,
+    Disabled
 }
