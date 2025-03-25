@@ -8,7 +8,7 @@ class Program
         // { Name.Person_To_Given, Name.Person_To_Receive },
     };
 
-    public static readonly HashSet<Name> ForcedMatchees = new HashSet<Name>(ForcedMatches.Values);
+    public static readonly HashSet<Name> ForcedMatchees = new(ForcedMatches.Values);
 
     public const int CurrentYear = 2016;
     public static readonly EmailStatus EmailStatus = EmailStatus.Disabled;

@@ -11,7 +11,7 @@ public static class Email
 
     public static void SendInitialEmail()
     {
-        SendToAll("Who's in?", $@"Hello everyone,<br /><br />I hope that everyone is doing well, and am looking forward to catching up with many of you at Christmas time!<br /><br />Please click <a href=""{ConfigurationManager.AppSettings["GoogleFormUrl"]}""><b>here</b></a> to fill out the form and submit your response.  It only takes one minute to do!</b>");
+        SendToAll("Who's in?", $@"Hello everyone,<br /><br />I hope that everyone is doing well, and am looking forward to catching up with many of you at Christmas time!<br /><br />Please click <a href=""{ConfigurationManager.AppSettings["GoogleFormUrl"]}""><b>here</b></a> to fill out the form and submit your response. It only takes one minute to do!</b>");
     }
 
     public static void SendWallOfFame()
@@ -19,7 +19,7 @@ public static class Email
         var responses = Parsing.GetResponses(Program.ResponsesDocument);
         var responsesString = string.Join("<br />", responses.Select(r => r.Name.GetFullName()).Where(r => r != "Rob Keim"));
 
-        string body = $@"Thanks for everyone that has responded so far!  The next update will be the wall of shame so be sure to get your responses sent in ASAP to avoid being on that list!<br /><br />Here's the wall of fame for the people who have already responded (in order of their responses):<br /><br />{responsesString}<br /><br />For those who haven't responded yet, click <a href=""{ConfigurationManager.AppSettings["GoogleFormUrl"]}""><b>here</b></a> to do so.";
+        string body = $@"Thanks for everyone that has responded so far! The next update will be the wall of shame so be sure to get your responses sent in ASAP to avoid being on that list!<br /><br />Here's the wall of fame for the people who have already responded (in order of their responses):<br /><br />{responsesString}<br /><br />For those who haven't responded yet, click <a href=""{ConfigurationManager.AppSettings["GoogleFormUrl"]}""><b>here</b></a> to do so.";
 
         SendToAll("Wall of fame", body);
     }
@@ -87,7 +87,7 @@ public static class Email
                 SendEmailAsync(giver.Email, "Pairing", message).Wait();
             }
 
-            SendToAll("Pairings sent", "The pairing have been sent!!  Let me know ASAP if there are any problems, and let the shopping begin!");
+            SendToAll("Pairings sent", "The pairing have been sent!! Let me know ASAP if there are any problems, and let the shopping begin!");
         }
         else
         {

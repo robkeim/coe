@@ -36,9 +36,8 @@ public static class Calculations
             }
 
             // Fix a match if necessary
-            if (Program.ForcedMatches.ContainsKey(personToMatch))
+            if (Program.ForcedMatches.TryGetValue(personToMatch, out Name forcedMatch))
             {
-                var forcedMatch = Program.ForcedMatches[personToMatch];
                 bestMatchIndex = participants.IndexOf(participants.Single(p => p.Name == forcedMatch));
                 bestMatchWeight = -1;
             }
