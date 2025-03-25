@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace COE;
+﻿namespace COE;
 
 public static class Calculations
 {
@@ -21,7 +17,7 @@ public static class Calculations
         while (matchCount < participants.Count - 1)
         {
             var potentialMatches = matrix.GetPotentialMatches()
-                .Where(pm => !Program.ForcedMatchees.Contains(participants[pm.Index].Name)) // Filter out anyone that we're fixing their match
+                .Where(pm => !Program.ForcedMatchees.Contains(participants[pm.Index].Name)) // Filter out anyone who we're fixing their match
                 .OrderByDescending(pm => pm.TotalWeight)
                 .ToList();
 
